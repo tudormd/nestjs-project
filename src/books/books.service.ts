@@ -13,7 +13,7 @@ import { ObjectID } from 'mongodb';
 import { BookRepository } from './book.repository';
 import { Book } from './interfaces/books.interface';
 import { CreateBookDto } from './dto/create-book.dto';
-import { AuthorRepository } from '@/authors/author.repository';
+import { AuthorRepository } from '../authors/author.repository';
 
 @Injectable()
 export class BooksService {
@@ -26,9 +26,7 @@ export class BooksService {
 
   async findAll(): Promise<Book[]> {
     try {
-      return await this.bookRepository.find({
-        relations: ["author"],
-      });
+      return await this.bookRepository.find();
     } catch (error) {
       Logger.error('findAll: Error on retrieve books', error);
       throw new HttpException(
@@ -40,6 +38,8 @@ export class BooksService {
 
   async findOne(id: string): Promise<Book> {
     try {
+      const a = await this.bookRepository.find({ where: { "author.id": new ObjectID("5e498e2dbe2b735e1c8cc21c") } });
+      console.log(a);
       const book = await this.bookRepository.findOne(id);
       if (!book) {
         throw new NotFoundException(`Book with ID "${id}" not found`);
@@ -52,6 +52,20 @@ export class BooksService {
         HttpStatus.BAD_REQUEST,
       );
     }
+  }
+
+  async getBooksByAuthorId(id: string): Promise<Book[]> {
+    try {
+      const books = await this.bookRepository.find({ where: { "author.id": new ObjectID(id) } });
+      return books;
+    } catch (error) {
+      Logger.error('findBooksByAuthorId: Error on retrieve books by author Id', error);
+      throw new HttpException(
+        { message: 'findBooksByAuthorId: Error on retrieve books by author Id', error },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
   }
 
   async create(createBookDto: CreateBookDto): Promise<Book> {

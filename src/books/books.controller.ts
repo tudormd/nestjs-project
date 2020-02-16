@@ -7,15 +7,16 @@ import {
   Put,
   Post,
 } from '@nestjs/common';
-import { ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { BooksService } from './books.service';
 import { CreateBookDto } from './dto/create-book.dto';
 import { Book } from './interfaces/books.interface';
 
+@ApiTags('books')
 @Controller('books')
 export class BooksController {
-  constructor(private readonly booksService: BooksService) {}
+  constructor(private readonly booksService: BooksService) { }
 
   @ApiOperation({ summary: 'Get all books' })
   @ApiResponse({
@@ -37,6 +38,17 @@ export class BooksController {
   @Get(':id')
   findOne(@Param('id') id: string): Promise<Book> {
     return this.booksService.findOne(id);
+  }
+
+  @ApiOperation({ summary: 'Get books by author' })
+  @ApiResponse({
+    status: 200,
+    description: 'Return books.',
+    type: CreateBookDto,
+  })
+  @Get('author/:id')
+  findBooksByAuthor(@Param('id') id: string): Promise<Book[]> {
+    return this.booksService.getBooksByAuthorId(id);
   }
 
   @ApiOperation({ summary: 'Create book' })

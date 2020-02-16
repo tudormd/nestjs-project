@@ -2,7 +2,7 @@ import { IsNotEmpty, IsString, MinLength, MaxLength } from 'class-validator';
 import { Transform, Type } from 'class-transformer';
 
 import { ApiProperty } from '@nestjs/swagger';
-import { AuthorEntity } from '@/authors/author.entity';
+import { AuthorEntity } from '../../authors/author.entity';
 
 export class CreateBookDto {
   @ApiProperty()

@@ -9,11 +9,9 @@ import {
   CreateDateColumn,
   Column,
   Entity,
-  JoinColumn,
-  OneToOne,
 } from 'typeorm';
 
-import { AuthorEntity } from '@/authors/author.entity';
+import { AuthorEntity } from '../authors/author.entity';
 
 @Entity('book')
 export class BookEntity extends BaseEntity {
@@ -26,8 +24,7 @@ export class BookEntity extends BaseEntity {
   @Column({ type: 'varchar', length: 50, nullable: false })
   title: string;
 
-  @OneToOne(() => AuthorEntity, { eager: true, nullable: false, onDelete: 'CASCADE' })
-  @JoinColumn()
+  @Column(() => AuthorEntity)
   author: AuthorEntity;
 
   @Column({ type: 'varchar', length: 34, nullable: false })
@@ -37,6 +34,7 @@ export class BookEntity extends BaseEntity {
   @Transform(value => new Date(value), { toClassOnly: true })
   @Column({ type: Date })
   publishedAt: Date;
+
 
   @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
