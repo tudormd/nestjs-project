@@ -1,0 +1,17 @@
+version: '3.6'
+# usage:
+# docker-compose up or sudo docker-compose up
+# recreate:
+# docker-compose up --force-recreate or sudo docker-compose up --force-recreate 
+# stop
+# press Ctrl+C
+services:
+  mongo:
+    image: mongo
+    container_name: my-mongodb
+    ports:
+    - "27017:27017"
+    environment:
+      - MONGO_INITDB_DATABASE=test
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin
