@@ -16,7 +16,7 @@ import { Book } from './interfaces/books.interface';
 @ApiTags('books')
 @Controller('books')
 export class BooksController {
-  constructor(private readonly booksService: BooksService) { }
+  constructor(private readonly booksService: BooksService) {}
 
   @ApiOperation({ summary: 'Get all books' })
   @ApiResponse({

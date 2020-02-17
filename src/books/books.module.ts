@@ -11,4 +11,4 @@ import { AuthorRepository } from '../authors/author.repository';
   controllers: [BooksController],
   providers: [BooksService],
 })
-export class BooksModule { }
+export class BooksModule {}

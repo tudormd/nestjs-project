@@ -9,7 +9,6 @@ import {
 
 import { ObjectID } from 'mongodb';
 
-
 import { Transform, Type } from 'class-transformer';
 
 @Entity('author')

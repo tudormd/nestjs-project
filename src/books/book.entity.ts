@@ -35,7 +35,6 @@ export class BookEntity extends BaseEntity {
   @Column({ type: Date })
   publishedAt: Date;
 
-
   @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
 

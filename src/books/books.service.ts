@@ -22,7 +22,7 @@ export class BooksService {
     private readonly bookRepository: BookRepository,
     @InjectRepository(AuthorRepository)
     private readonly authorRepository: AuthorRepository,
-  ) { }
+  ) {}
 
   async findAll(): Promise<Book[]> {
     try {
@@ -38,8 +38,6 @@ export class BooksService {
 
   async findOne(id: string): Promise<Book> {
     try {
-      const a = await this.bookRepository.find({ where: { "author.id": new ObjectID("5e498e2dbe2b735e1c8cc21c") } });
-      console.log(a);
       const book = await this.bookRepository.findOne(id);
       if (!book) {
         throw new NotFoundException(`Book with ID "${id}" not found`);
@@ -56,16 +54,23 @@ export class BooksService {
 
   async getBooksByAuthorId(id: string): Promise<Book[]> {
     try {
-      const books = await this.bookRepository.find({ where: { "author.id": new ObjectID(id) } });
+      const books = await this.bookRepository.find({
+        where: { 'author.id': new ObjectID(id) },
+      });
       return books;
     } catch (error) {
-      Logger.error('findBooksByAuthorId: Error on retrieve books by author Id', error);
+      Logger.error(
+        'findBooksByAuthorId: Error on retrieve books by author Id',
+        error,
+      );
       throw new HttpException(
-        { message: 'findBooksByAuthorId: Error on retrieve books by author Id', error },
+        {
+          message: 'findBooksByAuthorId: Error on retrieve books by author Id',
+          error,
+        },
         HttpStatus.BAD_REQUEST,
       );
     }
-
   }
 
   async create(createBookDto: CreateBookDto): Promise<Book> {

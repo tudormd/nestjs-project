@@ -9,10 +9,8 @@ export class BookRepository extends MongoRepository<BookEntity> {
   async createBook(createBookDto: CreateBookDto): Promise<Book> {
     const { title, author, iban, publishedAt } = createBookDto;
     const newBook = new BookEntity();
-    (newBook.title = title),
-      (newBook.author = author),
-      (newBook.iban = iban);
-    (newBook.publishedAt = publishedAt);
+    (newBook.title = title), (newBook.author = author), (newBook.iban = iban);
+    newBook.publishedAt = publishedAt;
     await newBook.save();
     return newBook;
   }
