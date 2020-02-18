@@ -14,7 +14,7 @@ import { Transform, Type } from 'class-transformer';
 @Entity('author')
 export class AuthorEntity extends BaseEntity {
   @ObjectIdColumn()
-  id!: number;
+  id!: string;
 
   @ObjectIdColumn({ name: 'id' })
   _id!: ObjectID;

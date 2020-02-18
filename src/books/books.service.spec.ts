@@ -10,7 +10,7 @@ import { AuthorRepository } from '../authors/author.repository';
 describe('BooksService', () => {
   let service: BooksService;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [BooksService],
       imports: [

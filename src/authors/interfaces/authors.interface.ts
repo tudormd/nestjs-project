@@ -1,5 +1,5 @@
 export interface Author {
-  readonly id: number;
+  readonly id: string;
   readonly firstName: string;
   readonly lastName: string;
   readonly birthday: Date;

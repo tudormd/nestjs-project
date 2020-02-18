@@ -1,7 +1,7 @@
 import { AuthorEntity } from '@/authors/author.entity';
 
 export interface Book {
-  readonly id: number;
+  readonly id: string;
   readonly title: string;
   readonly author: AuthorEntity;
   readonly iban: string;

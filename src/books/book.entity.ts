@@ -16,7 +16,7 @@ import { AuthorEntity } from '../authors/author.entity';
 @Entity('book')
 export class BookEntity extends BaseEntity {
   @ObjectIdColumn()
-  id!: number;
+  id!: string;
 
   @ObjectIdColumn({ name: 'id' })
   _id!: ObjectID;

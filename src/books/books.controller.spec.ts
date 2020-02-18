@@ -11,7 +11,7 @@ import { DataBaseConfigService } from '../config/database/configuration.service'
 describe('Books Controller', () => {
   let controller: BooksController;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [BooksController],
       providers: [BooksService],
