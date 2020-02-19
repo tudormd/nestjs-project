@@ -12,6 +12,7 @@ import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthorsService } from './authors.service';
 import { Author } from './interfaces/authors.interface';
 import { CreateAuthorDto } from './dto/create-author.dto';
+import { UpdateAuthorDto } from './dto/update-author.dto';
 
 @ApiTags('authors')
 @Controller('authors')
@@ -52,7 +53,7 @@ export class AuthorsController {
   @Put(':id')
   update(
     @Param('id') id: string,
-    @Body() updateAuthorDto: CreateAuthorDto,
+    @Body() updateAuthorDto: UpdateAuthorDto,
   ): Promise<Author> {
     return this.authorsService.update(id, updateAuthorDto);
   }

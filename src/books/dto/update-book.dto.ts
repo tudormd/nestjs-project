@@ -4,7 +4,7 @@ import { Transform, Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
 import { AuthorEntity } from '../../authors/author.entity';
 
-export class CreateBookDto {
+export class UpdateBookDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
@@ -14,11 +14,11 @@ export class CreateBookDto {
   @MaxLength(50, {
     message: 'Title is too long',
   })
-  readonly title: string;
+  title?: string;
 
   @ApiProperty()
   @IsNotEmpty()
-  readonly author: AuthorEntity;
+  author?: AuthorEntity;
 
   @ApiProperty()
   @IsNotEmpty()
@@ -29,11 +29,11 @@ export class CreateBookDto {
   @MaxLength(34, {
     message: 'Iban is too long',
   })
-  readonly iban: string;
+  iban?: string;
 
   @ApiProperty()
   @IsNotEmpty()
   @Type(() => Date)
   @Transform(value => new Date(value), { toClassOnly: true })
-  readonly publishedAt: Date;
+  publishedAt?: Date;
 }

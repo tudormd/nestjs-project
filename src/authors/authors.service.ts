@@ -5,13 +5,14 @@ import { HttpStatus } from '@nestjs/common';
 import { Logger } from '@nestjs/common';
 
 import { ObjectID } from 'mongodb';
+import { validate } from 'class-validator';
 
 import { Author } from './interfaces/authors.interface';
-import { AuthorEntity } from './author.entity';
 import { CreateAuthorDto } from './dto/create-author.dto';
 import { AuthorRepository } from './author.repository';
 
-import { validate } from 'class-validator';
+import { UpdateAuthorDto } from './dto/update-author.dto';
+
 
 @Injectable()
 export class AuthorsService {
@@ -52,11 +53,11 @@ export class AuthorsService {
     return this.authorRepository.createAuthor(createAuthorDto);
   }
 
-  async update(id: string, createAuthorDto: CreateAuthorDto): Promise<Author> {
-    let atr = new AuthorEntity();
-    atr.lastName = createAuthorDto.lastName;
-    atr.firstName = createAuthorDto.firstName;
-    atr.birthday = new Date(createAuthorDto.birthday);
+  async update(id: string, updateAuthorDto: UpdateAuthorDto): Promise<Author> {
+    let atr = new UpdateAuthorDto();
+    atr.lastName = updateAuthorDto.lastName;
+    atr.firstName = updateAuthorDto.firstName;
+    atr.birthday = new Date(updateAuthorDto.birthday);
     const errors = await validate(atr);
     if (errors.length) {
       throw new HttpException(
@@ -66,7 +67,7 @@ export class AuthorsService {
     } else {
       const author = await this.authorRepository.findOneAndUpdate(
         { _id: new ObjectID(id) },
-        { $set: createAuthorDto },
+        { $set: updateAuthorDto },
         { returnOriginal: false },
       );
       if (!author.lastErrorObject.updatedExisting) {

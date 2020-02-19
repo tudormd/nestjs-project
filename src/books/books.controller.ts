@@ -12,6 +12,7 @@ import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { BooksService } from './books.service';
 import { CreateBookDto } from './dto/create-book.dto';
 import { Book } from './interfaces/books.interface';
+import { UpdateBookDto } from './dto/update-book.dto';
 
 @ApiTags('books')
 @Controller('books')
@@ -63,9 +64,9 @@ export class BooksController {
   @Put(':id')
   update(
     @Param('id') id: string,
-    @Body() createBookDto: CreateBookDto,
+    @Body() updateBookDto: UpdateBookDto,
   ): Promise<Book> {
-    return this.booksService.update(id, createBookDto);
+    return this.booksService.update(id, updateBookDto);
   }
 
   @Delete(':id')
