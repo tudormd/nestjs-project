@@ -12,7 +12,6 @@ import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { BooksService } from './books.service';
 import { CreateBookDto } from './dto/create-book.dto';
 import { Book } from './interfaces/books.interface';
-import { UpdateBookDto } from './dto/update-book.dto';
 
 @ApiTags('books')
 @Controller('books')
@@ -41,6 +40,17 @@ export class BooksController {
     return this.booksService.findOne(id);
   }
 
+
+  @ApiOperation({ summary: 'Update book by id' })
+  @ApiResponse({ status: 200, description: 'Return book.' })
+  @Put(':id')
+  update(
+    @Param('id') id: string,
+    @Body() createBookDto: CreateBookDto,
+  ): Promise<Book> {
+    return this.booksService.update(id, createBookDto);
+  }
+
   @ApiOperation({ summary: 'Get books by author' })
   @ApiResponse({
     status: 200,
@@ -55,21 +65,12 @@ export class BooksController {
   @ApiOperation({ summary: 'Create book' })
   @ApiResponse({ status: 200, description: 'Return book.' })
   @Post()
-  addAuthor(@Body() createBookDto: CreateBookDto): Promise<Book> {
+  addBook(@Body() createBookDto: CreateBookDto): Promise<Book> {
     return this.booksService.create(createBookDto);
   }
 
-  @ApiOperation({ summary: 'Update book by id' })
-  @ApiResponse({ status: 200, description: 'Return book.' })
-  @Put(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateBookDto: UpdateBookDto,
-  ): Promise<Book> {
-    return this.booksService.update(id, updateBookDto);
-  }
-
   @Delete(':id')
+  @ApiResponse({ status: 200, description: 'Return void.' })
   delete(@Param('id') id: string): Promise<void> {
     return this.booksService.delete(id);
   }

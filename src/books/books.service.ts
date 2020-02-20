@@ -14,6 +14,8 @@ import { BookRepository } from './book.repository';
 import { Book } from './interfaces/books.interface';
 import { CreateBookDto } from './dto/create-book.dto';
 import { AuthorRepository } from '../authors/author.repository';
+import { BookEntity } from './book.entity';
+import { AuthorEntity } from '@/authors/author.entity';
 
 @Injectable()
 export class BooksService {
@@ -22,7 +24,7 @@ export class BooksService {
     private readonly bookRepository: BookRepository,
     @InjectRepository(AuthorRepository)
     private readonly authorRepository: AuthorRepository,
-  ) {}
+  ) { }
 
   async findAll(): Promise<Book[]> {
     try {
@@ -55,7 +57,7 @@ export class BooksService {
   async getBooksByAuthorId(id: string): Promise<Book[]> {
     try {
       const books = await this.bookRepository.find({
-        where: { 'author.id': new ObjectID(id) },
+        where: { 'author._id': new ObjectID(id) },
       });
       return books;
     } catch (error) {
@@ -74,16 +76,25 @@ export class BooksService {
   }
 
   async create(createBookDto: CreateBookDto): Promise<Book> {
-    const author = await this.authorRepository.findOne(createBookDto.author);
-
-    return this.bookRepository.createBook({ ...createBookDto, author });
+    const author = await this.authorRepository.findOne(createBookDto.author.id);
+    const { title, iban, publishedAt } = createBookDto;
+    const book = this.bookRepository.create({
+      title,
+      iban,
+      publishedAt,
+      author: { ...author, _id: new ObjectID(author.id), id: undefined },
+    });
+    await this.bookRepository.save(book);
+    return book;
   }
 
   async update(id: string, createBookDto: CreateBookDto): Promise<Book> {
-    let book = new CreateBookDto();
+    const result = await this.bookRepository.findOne(id);
+    let book = new BookEntity();
     book.title = createBookDto.title;
     book.publishedAt = new Date(createBookDto.publishedAt);
     book.iban = createBookDto.iban;
+    book.author = { ...result.author, _id: new ObjectID(result.id), id: undefined } as AuthorEntity;
     const errors = await validate(book);
     if (errors.length) {
       throw new HttpException(
@@ -91,17 +102,17 @@ export class BooksService {
         HttpStatus.BAD_REQUEST,
       );
     } else {
-      const book = await this.bookRepository.findOneAndUpdate(
+      const result = await this.bookRepository.findOneAndUpdate(
         { _id: new ObjectID(id) },
-        { $set: createBookDto },
+        { $set: book },
         { returnOriginal: false },
       );
-      if (!book.lastErrorObject.updatedExisting) {
+      if (!result.lastErrorObject.updatedExisting) {
         throw new NotFoundException(
           `Not updated author with ID "${id}" not found`,
         );
       }
-      return { ...book.value, id: book.value._id, _id: undefined };
+      return { ...result.value, id: result.value._id, _id: undefined };
     }
   }
 

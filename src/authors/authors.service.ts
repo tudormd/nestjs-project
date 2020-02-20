@@ -10,9 +10,7 @@ import { validate } from 'class-validator';
 import { Author } from './interfaces/authors.interface';
 import { CreateAuthorDto } from './dto/create-author.dto';
 import { AuthorRepository } from './author.repository';
-
-import { UpdateAuthorDto } from './dto/update-author.dto';
-
+import { AuthorEntity } from './author.entity';
 
 @Injectable()
 export class AuthorsService {
@@ -53,11 +51,11 @@ export class AuthorsService {
     return this.authorRepository.createAuthor(createAuthorDto);
   }
 
-  async update(id: string, updateAuthorDto: UpdateAuthorDto): Promise<Author> {
-    let atr = new UpdateAuthorDto();
-    atr.lastName = updateAuthorDto.lastName;
-    atr.firstName = updateAuthorDto.firstName;
-    atr.birthday = new Date(updateAuthorDto.birthday);
+  async update(id: string, createAutoDto: CreateAuthorDto): Promise<Author> {
+    let atr = new CreateAuthorDto();
+    atr.lastName = createAutoDto.lastName;
+    atr.firstName = createAutoDto.firstName;
+    atr.birthday = new Date(createAutoDto.birthday);
     const errors = await validate(atr);
     if (errors.length) {
       throw new HttpException(
@@ -67,7 +65,7 @@ export class AuthorsService {
     } else {
       const author = await this.authorRepository.findOneAndUpdate(
         { _id: new ObjectID(id) },
-        { $set: updateAuthorDto },
+        { $set: createAutoDto },
         { returnOriginal: false },
       );
       if (!author.lastErrorObject.updatedExisting) {

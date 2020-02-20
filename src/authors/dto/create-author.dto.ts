@@ -13,7 +13,7 @@ export class CreateAuthorDto {
   @MaxLength(50, {
     message: 'First name is too long',
   })
-  readonly firstName: string;
+  firstName: string;
 
   @ApiProperty()
   @IsNotEmpty()
@@ -24,11 +24,11 @@ export class CreateAuthorDto {
   @MaxLength(50, {
     message: 'Last name is too long',
   })
-  readonly lastName: string;
+  lastName: string;
 
   @ApiProperty()
   @IsNotEmpty()
   @Type(() => Date)
   @Transform(value => new Date(value), { toClassOnly: true })
-  readonly birthday: Date;
+  birthday: Date;
 }
