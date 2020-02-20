@@ -106,7 +106,7 @@ describe('BooksService', () => {
         iban: '12345678987654321',
         publishedAt: new Date('1950-02-15T21:11:16.000Z'),
         author,
-        title: "C++"
+        title: 'C++',
       });
       expect(result.title).toEqual('C++');
     });

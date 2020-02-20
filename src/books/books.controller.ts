@@ -40,7 +40,6 @@ export class BooksController {
     return this.booksService.findOne(id);
   }
 
-
   @ApiOperation({ summary: 'Update book by id' })
   @ApiResponse({ status: 200, description: 'Return book.' })
   @Put(':id')

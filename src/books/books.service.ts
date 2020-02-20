@@ -24,7 +24,7 @@ export class BooksService {
     private readonly bookRepository: BookRepository,
     @InjectRepository(AuthorRepository)
     private readonly authorRepository: AuthorRepository,
-  ) { }
+  ) {}
 
   async findAll(): Promise<Book[]> {
     try {
@@ -94,7 +94,11 @@ export class BooksService {
     book.title = createBookDto.title;
     book.publishedAt = new Date(createBookDto.publishedAt);
     book.iban = createBookDto.iban;
-    book.author = { ...result.author, _id: new ObjectID(result.id), id: undefined } as AuthorEntity;
+    book.author = {
+      ...result.author,
+      _id: new ObjectID(result.id),
+      id: undefined,
+    } as AuthorEntity;
     const errors = await validate(book);
     if (errors.length) {
       throw new HttpException(
