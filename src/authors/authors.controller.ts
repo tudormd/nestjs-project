@@ -58,6 +58,7 @@ export class AuthorsController {
   }
 
   @Delete(':id')
+  @ApiOperation({ summary: 'Delete author by id' })
   delete(@Param('id') id: string): Promise<void> {
     return this.authorsService.delete(id);
   }

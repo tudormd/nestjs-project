@@ -29,7 +29,7 @@ export class BooksController {
     return await this.booksService.findAll();
   }
 
-  @ApiOperation({ summary: 'Get book' })
+  @ApiOperation({ summary: 'Get book by id' })
   @ApiResponse({
     status: 200,
     description: 'Return one book.',
@@ -69,6 +69,7 @@ export class BooksController {
   }
 
   @Delete(':id')
+  @ApiOperation({ summary: 'Delete book by id' })
   @ApiResponse({ status: 200, description: 'Return void.' })
   delete(@Param('id') id: string): Promise<void> {
     return this.booksService.delete(id);
