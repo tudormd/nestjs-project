@@ -8,9 +8,9 @@ import {
 } from 'typeorm';
 
 import { ObjectID } from 'mongodb';
+import { ApiProperty } from '@nestjs/swagger';
 
 import { Transform, Type } from 'class-transformer';
-import { ApiProperty } from '@nestjs/swagger';
 
 @Entity('author')
 export class AuthorEntity extends BaseEntity {
