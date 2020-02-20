@@ -47,7 +47,7 @@ export class AuthorsService {
     }
   }
 
-  async create(createAuthorDto: CreateAuthorDto): Promise<Author> {
+  async create(createAuthorDto: CreateAuthorDto): Promise<AuthorEntity> {
     return this.authorRepository.createAuthor(createAuthorDto);
   }
 

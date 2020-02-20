@@ -6,7 +6,7 @@ import { AuthorEntity } from './author.entity';
 
 @EntityRepository(AuthorEntity)
 export class AuthorRepository extends MongoRepository<AuthorEntity> {
-  async createAuthor(createAuthorDto: CreateAuthorDto): Promise<Author> {
+  async createAuthor(createAuthorDto: CreateAuthorDto): Promise<AuthorEntity> {
     const { firstName, lastName, birthday } = createAuthorDto;
     const newAuthor = new AuthorEntity();
     (newAuthor.firstName = firstName),

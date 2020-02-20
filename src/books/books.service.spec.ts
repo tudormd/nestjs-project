@@ -89,28 +89,28 @@ describe('BooksService', () => {
     });
   });
 
-  // describe('update', () => {
-  //   it('should return an object of book', async () => {
-  //     const author = await authorsService.create({
-  //       firstName: 'User_',
-  //       lastName: 'User_',
-  //       birthday: new Date('1950-02-15T21:11:16.000Z'),
-  //     });
-  //     const book = await booksService.create({
-  //       title: 'Book',
-  //       iban: '12345678987654321',
-  //       publishedAt: new Date('1950-02-15T21:11:16.000Z'),
-  //       author,
-  //     });
-  //     const result = await booksService.update(book.id, {
-  //       iban: '12345678987654321',
-  //       publishedAt: new Date('1950-02-15T21:11:16.000Z'),
-  //       author,
-  //       title: "C++"
-  //     });
-  //     expect(result.title).toEqual('C++');
-  //   });
-  // });
+  describe('update', () => {
+    it('should return an object of book', async () => {
+      const author = await authorsService.create({
+        firstName: 'User_',
+        lastName: 'User_',
+        birthday: new Date('1950-02-15T21:11:16.000Z'),
+      });
+      const book = await booksService.create({
+        title: 'Book',
+        iban: '12345678987654321',
+        publishedAt: new Date('1950-02-15T21:11:16.000Z'),
+        author,
+      });
+      const result = await booksService.update(book.id, {
+        iban: '12345678987654321',
+        publishedAt: new Date('1950-02-15T21:11:16.000Z'),
+        author,
+        title: "C++"
+      });
+      expect(result.title).toEqual('C++');
+    });
+  });
 
   describe('delete', () => {
     it('should return void', async () => {

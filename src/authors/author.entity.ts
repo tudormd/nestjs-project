@@ -10,21 +10,26 @@ import {
 import { ObjectID } from 'mongodb';
 
 import { Transform, Type } from 'class-transformer';
+import { ApiProperty } from '@nestjs/swagger';
 
 @Entity('author')
 export class AuthorEntity extends BaseEntity {
+  @ApiProperty()
   @ObjectIdColumn()
   id!: string;
 
   @ObjectIdColumn({ name: 'id' })
   _id!: ObjectID;
 
+  @ApiProperty()
   @Column({ type: 'varchar', length: 50, nullable: false })
   firstName: string;
 
+  @ApiProperty()
   @Column({ type: 'varchar', length: 50, nullable: false })
   lastName: string;
 
+  @ApiProperty()
   @Type(() => Date)
   @Transform(value => new Date(value), { toClassOnly: true })
   @Column({ type: Date })

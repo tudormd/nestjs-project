@@ -1,8 +1,8 @@
 import { IsNotEmpty, IsString, MinLength, MaxLength } from 'class-validator';
 import { Transform, Type } from 'class-transformer';
-
 import { ApiProperty } from '@nestjs/swagger';
-import { Author } from '../../authors/interfaces/authors.interface';
+
+import { AuthorEntity } from '../../authors/author.entity';
 
 export class CreateBookDto {
   @ApiProperty()
@@ -18,7 +18,7 @@ export class CreateBookDto {
 
   @ApiProperty()
   @IsNotEmpty()
-  readonly author: Author;
+  readonly author: AuthorEntity;
 
   @ApiProperty()
   @IsNotEmpty()
